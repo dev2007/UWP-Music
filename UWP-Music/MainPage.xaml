@@ -1,0 +1,156 @@
+﻿<Page
+    x:Class="UWP_Music.MainPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:UWP_Music"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d">
+    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+        <VisualStateManager.VisualStateGroups>
+            <VisualStateGroup>
+                <VisualState >
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="400" />
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <Setter Target="mainSplitView.CompactPaneLength" Value="48"/>
+                        <Setter Target="mainSplitView.IsPaneOpen" Value="False"/>
+                        <Setter Target="MaxMenu.Visibility" Value="Collapsed"/>
+                        <Setter Target="MinMenu.Visibility" Value="Visible"/>
+                        <Setter Target="MaxUserStackPanel.Visibility" Value="Collapsed"/>
+                        <Setter Target="MinUserStackPanel.Visibility" Value="Visible"/>
+                    </VisualState.Setters>
+                </VisualState>
+                <VisualState>
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="800"/>
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <Setter Target="mainSplitView.CompactPaneLength" Value="190"/>
+                        <Setter Target="mainSplitView.IsPaneOpen" Value="True"/>
+                        <Setter Target="MaxMenu.Visibility" Value="Visible"/>
+                        <Setter Target="MinMenu.Visibility" Value="Collapsed"/>
+                        <Setter Target="MaxUserStackPanel.Visibility" Value="Visible"/>
+                        <Setter Target="MinUserStackPanel.Visibility" Value="Collapsed"/>
+                    </VisualState.Setters>
+                </VisualState>
+            </VisualStateGroup>
+        </VisualStateManager.VisualStateGroups>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        <SplitView Grid.Row="0" x:Name="mainSplitView" OpenPaneLength="{StaticResource MenuMaxWidth}" CompactPaneLength="{StaticResource MenuMaxWidth}" PaneBackground="{StaticResource MenuBackgroundColor}" DisplayMode="CompactOverlay"  IsPaneOpen="True">
+            <SplitView.Pane>
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+                    <Button x:Name="MenuBtn" FontFamily="Segoe MDL2 Assets" Content="" FontSize="16" Margin="8,0,8,0" Click="MenuBtnClick" Style="{StaticResource MenuButtonStyle}"/>
+                    <ScrollViewer  x:Name="MaxMenu" Grid.Row="1" HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto">
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                            </Grid.RowDefinitions>
+                            <ListView Grid.Row="0" x:Name="MaxMenuListView" ItemTemplate="{StaticResource MenuItemDataTemplate}" ItemContainerStyle="{StaticResource ListViewItemStyle}" IsItemClickEnabled="True" ItemClick="MenuListViewItemClick"/>
+                            <StackPanel  Grid.Row="1">
+                                <TextBlock x:Name="MusicTextBlock" Text="我的音乐" Foreground="{StaticResource MenuTitleColor}" FontSize="12" Margin="16,32,0,8"/>
+                                <ListView x:Name="MusicListView" ItemTemplate="{StaticResource MusicItemDateTemplate}" ItemContainerStyle="{StaticResource ListViewItemStyle}" IsItemClickEnabled="True" ItemClick="MenuListViewItemClick"/>
+                            </StackPanel>
+                            <StackPanel  Grid.Row="2">
+                                <TextBlock Text="创建的歌单" Foreground="{StaticResource MenuTitleColor}" FontSize="12" Margin="16,32,0,8"/>
+                                <ListView x:Name="MyFavListView" ItemTemplate="{StaticResource MusicItemDateTemplate}" ItemContainerStyle="{StaticResource ListViewItemStyle}" IsItemClickEnabled="True" ItemClick="MenuListViewItemClick"/>
+                            </StackPanel>
+                            <StackPanel  Grid.Row="3">
+                                <TextBlock Text="收藏的歌单" Foreground="{StaticResource MenuTitleColor}" FontSize="12" Margin="16,32,0,8"/>
+                                <ListView x:Name="FavListView" ItemTemplate="{StaticResource MusicItemDateTemplate}" ItemContainerStyle="{StaticResource ListViewItemStyle}" IsItemClickEnabled="True" ItemClick="MenuListViewItemClick"/>
+                            </StackPanel>
+                        </Grid>
+                    </ScrollViewer>
+                    <ScrollViewer x:Name="MinMenu" Visibility="Collapsed" Grid.Row="1" HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto">
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                            </Grid.RowDefinitions>
+                            <ListView Grid.Row="0" x:Name="MinMenuListView" ItemTemplate="{StaticResource MenuItemDataTemplate}" ItemContainerStyle="{StaticResource ListViewItemStyle}" IsItemClickEnabled="True" ItemClick="MenuListViewItemClick"/>
+                            <Button Grid.Row="1" x:Name="ReMaxBtn" FontFamily="Segoe MDL2 Assets" Content="" Click="ReMaxBtnClick" Padding="16,16,16,16" Style="{StaticResource ReMaxButtonStyle}"/>
+                        </Grid>
+                    </ScrollViewer>
+                    <StackPanel x:Name="MaxUserStackPanel" Grid.Row="2" Visibility="Collapsed" Orientation="Horizontal" HorizontalAlignment="Center" BorderBrush="LightGray" BorderThickness="0,1,0,0" Height="62">
+                        <Button Style="{StaticResource MenuButtonStyle}">
+                            <SymbolIcon Symbol="People"/>
+                        </Button>
+                        <TextBlock x:Name="UserName" Text="Dev2007" FontSize="12" VerticalAlignment="Center"/>
+                        <Button Style="{StaticResource MenuButtonStyle}">
+                            <SymbolIcon Symbol="Mail"/>
+                        </Button>
+                        <Button Style="{StaticResource MenuButtonStyle}">
+                            <SymbolIcon Symbol="Setting"/>
+                        </Button>
+                    </StackPanel>
+                    <StackPanel x:Name="MinUserStackPanel" Grid.Row="2" Orientation="Vertical" BorderBrush="LightGray" BorderThickness="0,1,0,0" Height="100">
+                        <Button Style="{StaticResource MenuButtonStyle}">
+                            <SymbolIcon Symbol="People"/>
+                        </Button>
+                        <Button Style="{StaticResource MenuButtonStyle}">
+                            <SymbolIcon Symbol="Mail"/>
+                        </Button>
+                        <Button Style="{StaticResource MenuButtonStyle}">
+                            <SymbolIcon Symbol="Setting"/>
+                        </Button>
+                    </StackPanel>
+                </Grid>
+            </SplitView.Pane>
+            <Frame x:Name="splitVewFrame" Margin="0,10" />
+        </SplitView>
+        <Grid Grid.Row="1" Height="54" x:Name="PlayBar" BorderBrush="LightGray" BorderThickness="0,1,0,0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+            <Image x:Name="CoverImage" Grid.Column="0" Source="/Assets/cover.jpg" Width="54"/>
+            <StackPanel Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Center">
+                <Button>
+                    <SymbolIcon Symbol="Back"/>
+                </Button>
+                <Button>
+                    <SymbolIcon Symbol="Play"/>
+                </Button>
+                <Button>
+                    <SymbolIcon Symbol="Forward"/>
+                </Button>
+            </StackPanel>
+            <StackPanel Grid.Column="2" Orientation="Vertical" VerticalAlignment="Center">
+                <RelativePanel>
+                    <TextBlock RelativePanel.AlignLeftWithPanel="True" Text="A Little Love-冯曦妤"/>
+                    <TextBlock RelativePanel.AlignRightWithPanel="True" Text="01:23 / 03:11"/>
+                </RelativePanel>
+                <Slider Height="20"/>
+            </StackPanel>
+            <StackPanel Grid.Column="3" Orientation="Horizontal" HorizontalAlignment="Center">
+                <Button Content="" FontFamily="Segoe MDL2 Assets"/>
+                <Button>
+                    <SymbolIcon Symbol="Switch"/>
+                </Button>
+                <Button>
+                    <SymbolIcon Symbol="Volume"/>
+                </Button>
+                <Button>
+                    <SymbolIcon Symbol="List"/>
+                </Button>
+            </StackPanel>
+        </Grid>
+    </Grid>
+</Page>
